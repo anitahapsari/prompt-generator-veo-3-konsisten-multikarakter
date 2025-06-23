@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aplikasi Prompter Konsisten Multikarakter</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f0f2f5;
+      padding: 2rem;
+    }
+    .container {
+      max-width: 960px;
+      margin: auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    textarea, select, input[type=text] {
+      width: 100%;
+      padding: 0.5rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    label {
+      font-weight: bold;
+    }
+    .output {
+      display: flex;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    .output textarea {
+      height: 300px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Aplikasi Prompter Konsisten Multikarakter</h1>
+    <form id="promptForm">
+      <label>1. Judul Scene</label><input type="text" id="judul">
+      
+      <label>2-7. Deskripsi Karakter 1-6</label>
+      <textarea id="karakter1" placeholder="Karakter 1"></textarea>
+      <textarea id="karakter2" placeholder="Karakter 2"></textarea>
+      <textarea id="karakter3" placeholder="Karakter 3"></textarea>
+      <textarea id="karakter4" placeholder="Karakter 4"></textarea>
+      <textarea id="karakter5" placeholder="Karakter 5"></textarea>
+      <textarea id="karakter6" placeholder="Karakter 6"></textarea>
+      
+      <label>8-13. Detail Suara Karakter 1-6</label>
+      <textarea id="suara1" placeholder="Suara Karakter 1"></textarea>
+      <textarea id="suara2" placeholder="Suara Karakter 2"></textarea>
+      <textarea id="suara3" placeholder="Suara Karakter 3"></textarea>
+      <textarea id="suara4" placeholder="Suara Karakter 4"></textarea>
+      <textarea id="suara5" placeholder="Suara Karakter 5"></textarea>
+      <textarea id="suara6" placeholder="Suara Karakter 6"></textarea>
+
+      <label>14-19. Aksi Karakter 1-6</label>
+      <textarea id="aksi1" placeholder="Aksi Karakter 1"></textarea>
+      <textarea id="aksi2" placeholder="Aksi Karakter 2"></textarea>
+      <textarea id="aksi3" placeholder="Aksi Karakter 3"></textarea>
+      <textarea id="aksi4" placeholder="Aksi Karakter 4"></textarea>
+      <textarea id="aksi5" placeholder="Aksi Karakter 5"></textarea>
+      <textarea id="aksi6" placeholder="Aksi Karakter 6"></textarea>
+
+      <label>20-25. Ekspresi Karakter 1-6</label>
+      <textarea id="ekspresi1"></textarea>
+      <textarea id="ekspresi2"></textarea>
+      <textarea id="ekspresi3"></textarea>
+      <textarea id="ekspresi4"></textarea>
+      <textarea id="ekspresi5"></textarea>
+      <textarea id="ekspresi6"></textarea>
+
+      <label>26. Latar Tempat & Waktu</label><textarea id="latar"></textarea>
+
+      <label>27. Gerakan Kamera</label>
+      <select id="kamera">
+        <option>3D Rotation (Rotasi 3D)</option>
+        <option>Pan (Gerakan Mendatar)</option>
+        <option>Tilt (Gerakan Vertikal)</option>
+        <option>Zoom In (Perbesar)</option>
+        <option>Zoom Out (Perkecil)</option>
+        <option>Tracking Shot (Mengikuti Subjek)</option>
+        <option>Dolly In/Out</option>
+        <option>Crane Shot (Dari Atas ke Bawah)</option>
+        <option>Orbit (Mengelilingi Objek)</option>
+        <option>Push In / Pull Back</option>
+      </select>
+
+      <label>28. Pencahayaan</label>
+      <select id="lighting">
+        <option>Cerah alami</option>
+        <option>Remang-remang dramatis</option>
+        <option>Cahaya matahari senja</option>
+        <option>Studio lighting</option>
+        <option>Cahaya neon futuristik</option>
+      </select>
+
+      <label>29. Gaya Video</label>
+      <select id="style">
+        <option>Cinematic</option>
+        <option>Realistic</option>
+        <option>Cartoon</option>
+        <option>Anime</option>
+        <option>Noir</option>
+      </select>
+
+      <label>30. Suasana Keseluruhan</label><textarea id="suasana"></textarea>
+      <label>31. Suara Lingkungan</label><textarea id="lingkungan"></textarea>
+
+      <label>32-37. Dialog Karakter 1-6</label>
+      <textarea id="dialog1"></textarea>
+      <textarea id="dialog2"></textarea>
+      <textarea id="dialog3"></textarea>
+      <textarea id="dialog4"></textarea>
+      <textarea id="dialog5"></textarea>
+      <textarea id="dialog6"></textarea>
+
+      <label>38. Detail Tambahan</label><textarea id="tambahan"></textarea>
+
+      <button type="button" onclick="generatePrompt()">Buat Prompt</button>
+    </form>
+
+    <div class="output">
+      <div>
+        <h3>Prompt Bahasa Indonesia (dapat diedit)</h3>
+        <textarea id="hasilID"></textarea>
+      </div>
+      <div>
+        <h3>Final Prompt (English - tidak bisa diedit)</h3>
+        <textarea id="hasilEN" readonly></textarea>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function generatePrompt() {
+      const judul = document.getElementById('judul').value;
+      const kamera = document.getElementById('kamera').value;
+      const lighting = document.getElementById('lighting').value;
+      const style = document.getElementById('style').value;
+      const idText = `Judul: ${judul}\n... (isi lengkap lainnya mengikuti struktur) ...`;
+      const enText = `Title: ${judul}\n... (translated and structured prompt) ...`;
+      
+      document.getElementById('hasilID').value = idText;
+      document.getElementById('hasilEN').value = enText;
+    }
+  </script>
+</body>
+</html>
