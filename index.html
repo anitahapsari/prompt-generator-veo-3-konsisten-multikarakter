@@ -13,7 +13,7 @@
       padding: 2rem;
     }
     .container {
-      max-width: 960px;
+      max-width: 1100px;
       margin: auto;
       background: #003366;
       padding: 2rem;
@@ -26,26 +26,24 @@
       color: #66ccff;
       margin-bottom: 1.5rem;
     }
-    textarea, select, input[type=text] {
-      width: 100%;
-      padding: 0.75rem;
-      margin-bottom: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      background: #001a33;
-      color: #a2d9ff;
+    form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem 2rem;
     }
     label {
       font-weight: bold;
-      display: block;
-      margin-top: 1rem;
       color: #66ccff;
+      display: block;
+      margin-bottom: 0.25rem;
     }
-    .hint {
-      font-size: 0.85rem;
-      color: #99ccee;
-      margin-bottom: 0.5rem;
-      font-style: italic;
+    textarea, select, input[type=text] {
+      width: 100%;
+      padding: 0.6rem;
+      background: #001a33;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      color: #a2d9ff;
     }
     button {
       background: #66ccff;
@@ -55,6 +53,8 @@
       border-radius: 6px;
       cursor: pointer;
       font-size: 1rem;
+      display: block;
+      margin: 2rem auto;
     }
     button:hover {
       background: #3399cc;
@@ -65,16 +65,20 @@
       margin-top: 2rem;
       flex-wrap: wrap;
     }
-    .output textarea {
-      height: 400px;
-      border: 1px solid #ccc;
-      background: #002b4d;
-      color: #a2d9ff;
-    }
     .output div {
       flex: 1 1 45%;
     }
+    .output textarea {
+      height: 400px;
+      background: #002b4d;
+      color: #a2d9ff;
+      border: 1px solid #ccc;
+      padding: 1rem;
+    }
     @media (max-width: 768px) {
+      form {
+        grid-template-columns: 1fr;
+      }
       .output div {
         flex: 1 1 100%;
       }
@@ -85,8 +89,7 @@
   <div class="container">
     <h1>Aplikasi Prompter Konsisten Multikarakter</h1>
     <form id="promptForm"></form>
-    <button type="button" onclick="generatePrompt()">Buat Prompt</button>
-
+    <button onclick="generatePrompt()">Buat Prompt</button>
     <div class="output">
       <div>
         <h3>Prompt Bahasa Indonesia (dapat diedit)</h3>
@@ -98,7 +101,6 @@
       </div>
     </div>
   </div>
-
   <script>
     const cameraOptions = [
       { en: "Static Shot", id: "Bidikan Statis" },
@@ -138,6 +140,7 @@
     fields.forEach(labelText => {
       const label = document.createElement("label");
       label.textContent = labelText;
+      form.appendChild(label);
 
       if (labelText === "Gerakan Kamera") {
         const select = document.createElement("select");
@@ -147,12 +150,10 @@
           option.textContent = `${opt.en} (${opt.id})`;
           select.appendChild(option);
         });
-        form.appendChild(label);
         form.appendChild(select);
       } else {
         const textarea = document.createElement("textarea");
-        textarea.placeholder = `Masukkan ${labelText.toLowerCase()}...`;
-        form.appendChild(label);
+        textarea.placeholder = `Contoh narasi untuk ${labelText.toLowerCase()}...`;
         form.appendChild(textarea);
       }
     });
@@ -164,20 +165,20 @@
         data[field] = inputs[i]?.value || "";
       });
 
-      const hasilID = `Judul: ${data["Judul Scene"]}\n\nDi latar ${data["Latar Tempat & Waktu"]}, terdapat enam karakter:\n` +
-        Array.from({length: 6}, (_, i) => `Karakter ${i+1}: ${data[`Deskripsi Karakter ${i+1}`]} (${data[`Detail Suara Karakter ${i+1}`]}), sedang ${data[`Aksi Karakter ${i+1}`]} dengan ekspresi ${data[`Ekspresi Karakter ${i+1}`]}. Dialog: ${data[`Dialog Karakter ${i+1}`]}`).join("\n") +
-        `\n\nGerakan kamera: ${data["Gerakan Kamera"]}, pencahayaan: ${data["Pencahayaan"]}, gaya video: ${data["Gaya Video"]}.\nSuasana keseluruhan: ${data["Suasana Keseluruhan"]}.\nSuara lingkungan: ${data["Suara Lingkungan"]}.\n\nDetail tambahan: ${data["Detail Tambahan"]}`;
+      const hasilID = `Judul: ${data["Judul Scene"]}\n\nDi latar ${data["Latar Tempat & Waktu"]}, enam karakter muncul dengan detail sebagai berikut:\n` +
+        Array.from({length: 6}, (_, i) => `Karakter ${i+1}: ${data[`Deskripsi Karakter ${i+1}`]} (Suara: ${data[`Detail Suara Karakter ${i+1}`]}), sedang ${data[`Aksi Karakter ${i+1}`]} dengan ekspresi ${data[`Ekspresi Karakter ${i+1}`]}.\nDialog: ${data[`Dialog Karakter ${i+1}`]}`).join("\n\n") +
+        `\n\nKamera: ${data["Gerakan Kamera"]}, pencahayaan: ${data["Pencahayaan"]}, gaya video: ${data["Gaya Video"]}.\nSuasana: ${data["Suasana Keseluruhan"]}.\nSuara lingkungan: ${data["Suara Lingkungan"]}.\n\nDetail tambahan: ${data["Detail Tambahan"]}`;
 
-      const hasilEN = hasilID.replace(/Karakter (\d): (.*?) \((.*?)\), sedang (.*?) dengan ekspresi (.*?)\. Dialog: (.*?)(\n|$)/g, 
-        (_, num, desc, voice, act, exp, dialog) => `Character ${num}: ${desc} (voice: ${voice}), performing ${act} with expression ${exp}. Says: ${dialog}\n`
-      ).replace("Judul: ", "Title: ")
-        .replace("Di latar", "In the setting of")
-        .replace("Gerakan kamera", "Camera movement")
-        .replace("pencahayaan", "lighting")
-        .replace("gaya video", "video style")
-        .replace("Suasana keseluruhan", "Overall mood")
-        .replace("Suara lingkungan", "Environmental sound")
-        .replace("Detail tambahan", "Additional details");
+      const hasilEN = hasilID.replace("Judul:", "Title:")
+        .replace(/Karakter (\d): (.*?) \(Suara: (.*?)\), sedang (.*?) dengan ekspresi (.*?)\.\nDialog: (.*?)(\n|$)/g,
+        (_, num, desc, voice, act, exp, dialog) => `Character ${num}: ${desc} (voice: ${voice}), performing ${act} with expression ${exp}. Says: \"${dialog}\"\n`
+      ).replace("Di latar", "In the setting of")
+        .replace("Kamera:", "Camera:")
+        .replace("pencahayaan:", "lighting:")
+        .replace("gaya video:", "video style:")
+        .replace("Suasana:", "Overall mood:")
+        .replace("Suara lingkungan:", "Environmental sound:")
+        .replace("Detail tambahan:", "Additional details:");
 
       document.getElementById("hasilID").value = hasilID;
       document.getElementById("hasilEN").value = hasilEN;
