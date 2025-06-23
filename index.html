@@ -6,23 +6,23 @@
   <title>Aplikasi Prompter Konsisten Multikarakter</title>
   <style>
     body {
-      background-color: #0d1b2a;
-      color: #ade8f4;
+      background-color: #581c1c;
+      color: white;
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 2rem;
     }
     h1 {
       text-align: center;
-      color: #48cae4;
+      color: white;
     }
     .container {
       max-width: 900px;
       margin: auto;
-      background: #1b263b;
+      background: #7b2d2d;
       padding: 2rem;
       border-radius: 10px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.4);
+      box-shadow: 0 0 15px rgba(0,0,0,0.5);
     }
     label {
       display: block;
@@ -35,8 +35,8 @@
       margin-top: 0.5rem;
       border-radius: 5px;
       border: none;
-      background: #415a77;
-      color: #e0fbfc;
+      background: #8e3b3b;
+      color: white;
     }
     .split-columns {
       display: grid;
@@ -45,125 +45,69 @@
       margin-top: 3rem;
     }
     .final-output {
-      background-color: #0a1128;
+      background-color: #5a1f1f;
       padding: 1rem;
       border-radius: 8px;
-    }
-    .label-note {
-      font-style: italic;
-      font-size: 0.9rem;
-      color: #90e0ef;
     }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Aplikasi Prompter Konsisten Multikarakter</h1>
+
     <label>Judul Scene</label>
-    <input type="text" placeholder="Contoh: Pertemuan Misterius di Kafe Tengah Malam">
+    <input type="text" placeholder="Contoh: Pertemuan di Kafe Tengah Malam">
 
-    <!-- Deskripsi Karakter 1-6 -->
-    <label>Deskripsi Karakter 1</label>
-    <textarea placeholder="Contoh: Pria paruh baya, rambut ikal, memakai jas panjang hitam."></textarea>
-    <label>Deskripsi Karakter 2</label>
-    <textarea></textarea>
-    <label>Deskripsi Karakter 3</label>
-    <textarea></textarea>
-    <label>Deskripsi Karakter 4</label>
-    <textarea></textarea>
-    <label>Deskripsi Karakter 5</label>
-    <textarea></textarea>
-    <label>Deskripsi Karakter 6</label>
-    <textarea></textarea>
-
-    <!-- Detail Suara Karakter -->
-    <label>Detail Suara Karakter 1</label>
-    <textarea placeholder="Contoh: Berat, serak, dan berwibawa"></textarea>
-    <label>Detail Suara Karakter 2</label>
-    <textarea></textarea>
-    <label>Detail Suara Karakter 3</label>
-    <textarea></textarea>
-    <label>Detail Suara Karakter 4</label>
-    <textarea></textarea>
-    <label>Detail Suara Karakter 5</label>
-    <textarea></textarea>
-    <label>Detail Suara Karakter 6</label>
-    <textarea></textarea>
-
-    <!-- Aksi Karakter -->
-    <label>Aksi Karakter 1</label>
-    <textarea placeholder="Contoh: Berjalan tergesa-gesa di tengah hujan"></textarea>
-    <label>Aksi Karakter 2</label>
-    <textarea></textarea>
-    <label>Aksi Karakter 3</label>
-    <textarea></textarea>
-    <label>Aksi Karakter 4</label>
-    <textarea></textarea>
-    <label>Aksi Karakter 5</label>
-    <textarea></textarea>
-    <label>Aksi Karakter 6</label>
-    <textarea></textarea>
-
-    <!-- Ekspresi Karakter -->
-    <label>Ekspresi Karakter 1</label>
-    <textarea placeholder="Contoh: Cemas dan sedikit ketakutan"></textarea>
-    <label>Ekspresi Karakter 2</label>
-    <textarea></textarea>
-    <label>Ekspresi Karakter 3</label>
-    <textarea></textarea>
-    <label>Ekspresi Karakter 4</label>
-    <textarea></textarea>
-    <label>Ekspresi Karakter 5</label>
-    <textarea></textarea>
-    <label>Ekspresi Karakter 6</label>
-    <textarea></textarea>
-
-    <!-- Dialog Karakter -->
-    <label>Dialog Karakter 1</label>
-    <textarea placeholder="Contoh: \"Kita harus segera pergi dari sini!\""></textarea>
-    <label>Dialog Karakter 2</label>
-    <textarea></textarea>
-    <label>Dialog Karakter 3</label>
-    <textarea></textarea>
-    <label>Dialog Karakter 4</label>
-    <textarea></textarea>
-    <label>Dialog Karakter 5</label>
-    <textarea></textarea>
-    <label>Dialog Karakter 6</label>
-    <textarea></textarea>
-
-    <!-- Latar Tempat & Waktu -->
     <label>Latar Tempat & Waktu</label>
     <textarea placeholder="Contoh: Sebuah kafe tua di pinggir kota, pukul 2 pagi, hujan deras di luar."></textarea>
 
-    <!-- Gerakan Kamera -->
+    <!-- Detail Karakter -->
+    <h2>Detail Karakter (Hingga 6 Karakter)</h2>
+    <script>
+      for (let i = 1; i <= 6; i++) {
+        document.write(`
+          <h3>Karakter ${i}</h3>
+          <label>Deskripsi Karakter ${i}</label>
+          <textarea placeholder="Contoh: Pria paruh baya, rambut ikal, memakai jas hujan"></textarea>
+          <label>Detail Suara Karakter ${i}</label>
+          <textarea placeholder="Contoh: Berat, serak, dan berwibawa"></textarea>
+          <label>Aksi Karakter ${i}</label>
+          <textarea placeholder="Contoh: Berjalan tergesa-gesa di tengah hujan"></textarea>
+          <label>Ekspresi Karakter ${i}</label>
+          <textarea placeholder="Contoh: Cemas dan sedikit ketakutan"></textarea>
+          <label>Dialog Karakter ${i}</label>
+          <textarea placeholder='Contoh: "Kita harus segera pergi dari sini!"'></textarea>
+        `);
+      }
+    </script>
+
+    <!-- Elemen Sinematik -->
+    <h2>Elemen Sinematik</h2>
     <label>Gerakan Kamera</label>
     <select>
       <option>Static (Statis)</option>
       <option>Zoom In (Perbesar)</option>
       <option>Zoom Out (Perkecil)</option>
-      <option>Pan Left (Gerakan ke kiri)</option>
-      <option>Pan Right (Gerakan ke kanan)</option>
+      <option>Pan Left (Gerak ke kiri)</option>
+      <option>Pan Right (Gerak ke kanan)</option>
       <option>Tilt Up (Miring ke atas)</option>
       <option>Tilt Down (Miring ke bawah)</option>
-      <option>Dolly In (Gerakan kamera mendekat)</option>
-      <option>Dolly Out (Gerakan kamera menjauh)</option>
+      <option>Dolly In (Gerak kamera mendekat)</option>
+      <option>Dolly Out (Gerak kamera menjauh)</option>
       <option>3D Rotation (Rotasi 3D)</option>
       <option>Orbit (Mengelilingi objek)</option>
       <option>Track Forward (Gerak maju)</option>
       <option>Track Backward (Gerak mundur)</option>
     </select>
 
-    <!-- Pencahayaan -->
     <label>Pencahayaan</label>
     <select>
       <option>Natural</option>
-      <option>Low key (Gelap/kontras tinggi)</option>
+      <option>Low key (Gelap/Kontras tinggi)</option>
       <option>High key (Terang dan lembut)</option>
       <option>Spotlight (Sorotan cahaya fokus)</option>
     </select>
 
-    <!-- Gaya Video -->
     <label>Gaya Video</label>
     <select>
       <option>Cinematic</option>
@@ -173,23 +117,34 @@
       <option>Noir</option>
     </select>
 
-    <!-- Suasana & Lingkungan -->
+    <!-- Suasana dan Suara -->
+    <h2>Suasana & Suara</h2>
     <label>Suasana Keseluruhan</label>
-    <textarea placeholder="Contoh: Tegang dan misterius"></textarea>
-    <label>Suara Lingkungan</label>
-    <textarea placeholder="Contoh: Suara hujan deras dan petir menggema di kejauhan"></textarea>
+    <textarea placeholder="Contoh: Tegang, misterius, dengan sedikit nuansa melankolis."></textarea>
 
+    <label>Suara Lingkungan</label>
+    <textarea placeholder="Contoh: Suara hujan, dengungan lampu neon, musik jazz pelan dari radio."></textarea>
+
+    <!-- Detail Tambahan -->
+    <label>Detail Tambahan</label>
+    <textarea placeholder="Contoh: Fokus pada ekspresi mata karakter, ada objek penting di atas meja."></textarea>
+
+    <button style="margin-top:2rem; padding: 1rem; background: #400d0d; color: white; border: none; border-radius: 6px; font-weight: bold; width: 100%;">
+      Hasilkan Prompt
+    </button>
+
+    <!-- Output Prompt -->
     <div class="split-columns">
       <div>
         <h2>Prompt Video (Bahasa Indonesia - Dapat Diedit)</h2>
         <div class="final-output">
-          <!-- Hasil naratif deskriptif muncul di sini -->
+          <!-- Placeholder untuk output prompt dalam Bahasa Indonesia -->
         </div>
       </div>
       <div>
         <h2>Final Prompt (English - Tidak Dapat Diedit)</h2>
         <div class="final-output">
-          <!-- English formatted prompt result -->
+          <!-- Placeholder untuk prompt final Bahasa Inggris -->
         </div>
       </div>
     </div>
