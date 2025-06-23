@@ -65,15 +65,14 @@
     <textarea id="sceneSetting" placeholder="Contoh: Sebuah kafe tua di pinggir kota, pukul 2 pagi, hujan deras di luar."></textarea>
 
     <div id="characterContainer">
-      <!-- Character Blocks -->
+      <!-- Character Blocks (max 10) -->
       <div class="character-block">
         <label>Karakter 1</label>
-        <textarea placeholder="Deskripsi Karakter"></textarea>
-        <textarea placeholder="Detail Suara Karakter"></textarea>
-        <textarea placeholder="Aksi Karakter"></textarea>
-        <textarea placeholder="Ekspresi Karakter"></textarea>
-        <textarea placeholder="Dialog Karakter"></textarea>
-        <textarea placeholder="Contoh Ilustrasi"></textarea>
+        <textarea placeholder="Deskripsi Karakter + Contoh Ilustrasi"></textarea>
+        <textarea placeholder="Detail Suara Karakter + Contoh Ilustrasi"></textarea>
+        <textarea placeholder="Aksi Karakter + Contoh Ilustrasi"></textarea>
+        <textarea placeholder="Ekspresi Karakter + Contoh Ilustrasi"></textarea>
+        <textarea placeholder="Dialog Karakter + Contoh Ilustrasi"></textarea>
       </div>
     </div>
 
@@ -90,6 +89,9 @@
       <option>Dolly Out (Dorong Keluar)</option>
       <option>Crane Up (Naik dari atas)</option>
       <option>Crane Down (Turun dari atas)</option>
+      <option>Orbit (Mengitari Subjek)</option>
+      <option>Follow (Mengikuti Subjek)</option>
+      <option>Static (Statis)</option>
     </select>
 
     <label>Pencahayaan</label>
@@ -98,6 +100,8 @@
       <option>Low Key Lighting</option>
       <option>High Key Lighting</option>
       <option>Backlighting</option>
+      <option>Soft Light</option>
+      <option>Hard Light</option>
     </select>
 
     <label>Gaya Video</label>
@@ -106,9 +110,11 @@
       <option>Documentary</option>
       <option>Anime</option>
       <option>Realistic</option>
+      <option>Dreamlike</option>
+      <option>Noir</option>
     </select>
 
-    <label>Suasana & Suara</label>
+    <label>Suasana Keseluruhan</label>
     <textarea placeholder="Contoh: Tegang, misterius, dengan sedikit nuansa melankolis."></textarea>
 
     <label>Suara Lingkungan</label>
@@ -121,66 +127,54 @@
   </form>
 
   <div class="result" id="promptResult" style="display:none">
-    <h2>Prompt Bahasa Indonesia (Editable)</h2>
-    <div contenteditable="true" id="promptIndo"></div>
-
-    <h2>Prompt Final Bahasa Inggris (Tidak Dapat Diedit)</h2>
-    <div id="promptEnglish"></div>
+    <div class="flex-cols">
+      <div>
+        <h2>Prompt Bahasa Indonesia (Editable)</h2>
+        <div contenteditable="true" id="promptIndo"></div>
+      </div>
+      <div>
+        <h2>Prompt Final Bahasa Inggris (Struktur Veo 3)</h2>
+        <div id="promptEnglish"></div>
+      </div>
+    </div>
   </div>
 
   <script>
     function addCharacter() {
       const container = document.getElementById('characterContainer');
       const index = container.children.length + 1;
-      if(index > 6) return alert("Maksimal 6 karakter.");
+      if(index > 10) return alert("Maksimal 10 karakter.");
       const block = document.createElement('div');
       block.className = 'character-block';
       block.innerHTML = `
         <label>Karakter ${index}</label>
-        <textarea placeholder="Deskripsi Karakter"></textarea>
-        <textarea placeholder="Detail Suara Karakter"></textarea>
-        <textarea placeholder="Aksi Karakter"></textarea>
-        <textarea placeholder="Ekspresi Karakter"></textarea>
-        <textarea placeholder="Dialog Karakter"></textarea>
-        <textarea placeholder="Contoh Ilustrasi"></textarea>
+        <textarea placeholder="Deskripsi Karakter + Contoh Ilustrasi"></textarea>
+        <textarea placeholder="Detail Suara Karakter + Contoh Ilustrasi"></textarea>
+        <textarea placeholder="Aksi Karakter + Contoh Ilustrasi"></textarea>
+        <textarea placeholder="Ekspresi Karakter + Contoh Ilustrasi"></textarea>
+        <textarea placeholder="Dialog Karakter + Contoh Ilustrasi"></textarea>
       `;
       container.appendChild(block);
     }
 
     document.getElementById("promptForm").addEventListener("submit", function(event) {
       event.preventDefault();
-      // Di sini logika hasilkan promptnya akan diproses
       const title = document.getElementById("sceneTitle").value;
       const setting = document.getElementById("sceneSetting").value;
-      const motions = document.getElementById("cameraMotion").value;
-      const characterBlocks = document.querySelectorAll(".character-block");
-      const characters = [];
-      characterBlocks.forEach(block => {
-        const fields = block.querySelectorAll("textarea");
-        characters.push({
-          deskripsi: fields[0].value,
-          suara: fields[1].value,
-          aksi: fields[2].value,
-          ekspresi: fields[3].value,
-          dialog: fields[4].value,
-          ilustrasi: fields[5].value
-        });
+      const motion = document.getElementById("cameraMotion").value;
+      const characters = document.querySelectorAll(".character-block");
+      let indo = `Judul: ${title}\nLatar: ${setting}\nGerakan Kamera: ${motion}\nKarakter:`;
+      let eng = `Scene Title: ${title}. Setting: ${setting}. Camera Motion: ${motion}. Characters:`;
+      characters.forEach((block, i) => {
+        const text = block.querySelectorAll("textarea");
+        indo += `\nKarakter ${i+1}: ${text[0].value}, Suara: ${text[1].value}, Aksi: ${text[2].value}, Ekspresi: ${text[3].value}, Dialog: \"${text[4].value}\"`;
+        eng += `\nCharacter ${i+1}: ${text[0].value}, Voice: ${text[1].value}, Action: ${text[2].value}, Expression: ${text[3].value}, Says: \"${text[4].value}\".`;
       });
+      indo += `\n---\nPrompt akan dikembangkan lebih detail dalam versi bahasa Inggris.`;
+      eng += `\nEnsure consistent character appearance, motion style, and tone, formatted according to Veo 3 structure.`;
 
-      let promptIndo = `Judul: ${title}\nLatar: ${setting}\nGerakan Kamera: ${motions}\nKarakter:\n`;
-      characters.forEach((c, i) => {
-        promptIndo += `\nKarakter ${i+1}: ${c.deskripsi}, Suara: ${c.suara}, Aksi: ${c.aksi}, Ekspresi: ${c.ekspresi}, Dialog: \"${c.dialog}\", Ilustrasi: ${c.ilustrasi}`;
-      });
-      promptIndo += `\n---\nPrompt akan dikembangkan menjadi lebih detail di hasil akhir Bahasa Inggris.`;
-
-      let promptEnglish = `Scene title: ${title}. Setting: ${setting}. Camera motion: ${motions}. Characters:`;
-      characters.forEach((c, i) => {
-        promptEnglish += `\nCharacter ${i+1}: ${c.deskripsi}, Voice: ${c.suara}, Action: ${c.aksi}, Expression: ${c.ekspresi}, Says: \"${c.dialog}\". Illustration: ${c.ilustrasi}.`;
-      });
-      promptEnglish += `\nThe scene should be cinematic, with coherent emotional flow and visual consistency.`;
-
-      document.getElementById("promptIndo").innerText = promptIndo;
-      document.getElementById("promptEnglish").innerText = promptEnglish;
+      document.getElementById("promptIndo").innerText = indo;
+      document.getElementById("promptEnglish").innerText = eng;
       document.getElementById("promptResult").style.display = "block";
     });
   </script>
