@@ -6,183 +6,193 @@
   <title>Aplikasi Prompter Konsisten Multikarakter</title>
   <style>
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #001f3f;
-      color: #a2d9ff;
+      background-color: #0d1b2a;
+      color: #ade8f4;
+      font-family: Arial, sans-serif;
       margin: 0;
       padding: 2rem;
     }
-    .container {
-      max-width: 1100px;
-      margin: auto;
-      background: #003366;
-      padding: 2rem;
-      border-radius: 12px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.3);
-      border-left: 10px solid #66ccff;
-    }
     h1 {
       text-align: center;
-      color: #66ccff;
-      margin-bottom: 1.5rem;
+      color: #48cae4;
     }
-    form {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem 2rem;
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background: #1b263b;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.4);
     }
     label {
+      display: block;
+      margin-top: 1rem;
       font-weight: bold;
-      color: #66ccff;
-      display: block;
-      margin-bottom: 0.25rem;
     }
-    textarea, select, input[type=text] {
+    textarea, select, input {
       width: 100%;
-      padding: 0.6rem;
-      background: #001a33;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      color: #a2d9ff;
-    }
-    button {
-      background: #66ccff;
-      color: #001f3f;
+      padding: 0.5rem;
+      margin-top: 0.5rem;
+      border-radius: 5px;
       border: none;
-      padding: 0.75rem 1.5rem;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 1rem;
-      display: block;
-      margin: 2rem auto;
+      background: #415a77;
+      color: #e0fbfc;
     }
-    button:hover {
-      background: #3399cc;
-    }
-    .output {
-      display: flex;
+    .split-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       gap: 2rem;
-      margin-top: 2rem;
-      flex-wrap: wrap;
+      margin-top: 3rem;
     }
-    .output div {
-      flex: 1 1 45%;
-    }
-    .output textarea {
-      height: 400px;
-      background: #002b4d;
-      color: #a2d9ff;
-      border: 1px solid #ccc;
+    .final-output {
+      background-color: #0a1128;
       padding: 1rem;
+      border-radius: 8px;
     }
-    @media (max-width: 768px) {
-      form {
-        grid-template-columns: 1fr;
-      }
-      .output div {
-        flex: 1 1 100%;
-      }
+    .label-note {
+      font-style: italic;
+      font-size: 0.9rem;
+      color: #90e0ef;
     }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Aplikasi Prompter Konsisten Multikarakter</h1>
-    <form id="promptForm"></form>
-    <button onclick="generatePrompt()">Buat Prompt</button>
-    <div class="output">
+    <label>Judul Scene</label>
+    <input type="text" placeholder="Contoh: Pertemuan Misterius di Kafe Tengah Malam">
+
+    <!-- Deskripsi Karakter 1-6 -->
+    <label>Deskripsi Karakter 1</label>
+    <textarea placeholder="Contoh: Pria paruh baya, rambut ikal, memakai jas panjang hitam."></textarea>
+    <label>Deskripsi Karakter 2</label>
+    <textarea></textarea>
+    <label>Deskripsi Karakter 3</label>
+    <textarea></textarea>
+    <label>Deskripsi Karakter 4</label>
+    <textarea></textarea>
+    <label>Deskripsi Karakter 5</label>
+    <textarea></textarea>
+    <label>Deskripsi Karakter 6</label>
+    <textarea></textarea>
+
+    <!-- Detail Suara Karakter -->
+    <label>Detail Suara Karakter 1</label>
+    <textarea placeholder="Contoh: Berat, serak, dan berwibawa"></textarea>
+    <label>Detail Suara Karakter 2</label>
+    <textarea></textarea>
+    <label>Detail Suara Karakter 3</label>
+    <textarea></textarea>
+    <label>Detail Suara Karakter 4</label>
+    <textarea></textarea>
+    <label>Detail Suara Karakter 5</label>
+    <textarea></textarea>
+    <label>Detail Suara Karakter 6</label>
+    <textarea></textarea>
+
+    <!-- Aksi Karakter -->
+    <label>Aksi Karakter 1</label>
+    <textarea placeholder="Contoh: Berjalan tergesa-gesa di tengah hujan"></textarea>
+    <label>Aksi Karakter 2</label>
+    <textarea></textarea>
+    <label>Aksi Karakter 3</label>
+    <textarea></textarea>
+    <label>Aksi Karakter 4</label>
+    <textarea></textarea>
+    <label>Aksi Karakter 5</label>
+    <textarea></textarea>
+    <label>Aksi Karakter 6</label>
+    <textarea></textarea>
+
+    <!-- Ekspresi Karakter -->
+    <label>Ekspresi Karakter 1</label>
+    <textarea placeholder="Contoh: Cemas dan sedikit ketakutan"></textarea>
+    <label>Ekspresi Karakter 2</label>
+    <textarea></textarea>
+    <label>Ekspresi Karakter 3</label>
+    <textarea></textarea>
+    <label>Ekspresi Karakter 4</label>
+    <textarea></textarea>
+    <label>Ekspresi Karakter 5</label>
+    <textarea></textarea>
+    <label>Ekspresi Karakter 6</label>
+    <textarea></textarea>
+
+    <!-- Dialog Karakter -->
+    <label>Dialog Karakter 1</label>
+    <textarea placeholder="Contoh: \"Kita harus segera pergi dari sini!\""></textarea>
+    <label>Dialog Karakter 2</label>
+    <textarea></textarea>
+    <label>Dialog Karakter 3</label>
+    <textarea></textarea>
+    <label>Dialog Karakter 4</label>
+    <textarea></textarea>
+    <label>Dialog Karakter 5</label>
+    <textarea></textarea>
+    <label>Dialog Karakter 6</label>
+    <textarea></textarea>
+
+    <!-- Latar Tempat & Waktu -->
+    <label>Latar Tempat & Waktu</label>
+    <textarea placeholder="Contoh: Sebuah kafe tua di pinggir kota, pukul 2 pagi, hujan deras di luar."></textarea>
+
+    <!-- Gerakan Kamera -->
+    <label>Gerakan Kamera</label>
+    <select>
+      <option>Static (Statis)</option>
+      <option>Zoom In (Perbesar)</option>
+      <option>Zoom Out (Perkecil)</option>
+      <option>Pan Left (Gerakan ke kiri)</option>
+      <option>Pan Right (Gerakan ke kanan)</option>
+      <option>Tilt Up (Miring ke atas)</option>
+      <option>Tilt Down (Miring ke bawah)</option>
+      <option>Dolly In (Gerakan kamera mendekat)</option>
+      <option>Dolly Out (Gerakan kamera menjauh)</option>
+      <option>3D Rotation (Rotasi 3D)</option>
+      <option>Orbit (Mengelilingi objek)</option>
+      <option>Track Forward (Gerak maju)</option>
+      <option>Track Backward (Gerak mundur)</option>
+    </select>
+
+    <!-- Pencahayaan -->
+    <label>Pencahayaan</label>
+    <select>
+      <option>Natural</option>
+      <option>Low key (Gelap/kontras tinggi)</option>
+      <option>High key (Terang dan lembut)</option>
+      <option>Spotlight (Sorotan cahaya fokus)</option>
+    </select>
+
+    <!-- Gaya Video -->
+    <label>Gaya Video</label>
+    <select>
+      <option>Cinematic</option>
+      <option>Realistic</option>
+      <option>Surreal</option>
+      <option>Anime</option>
+      <option>Noir</option>
+    </select>
+
+    <!-- Suasana & Lingkungan -->
+    <label>Suasana Keseluruhan</label>
+    <textarea placeholder="Contoh: Tegang dan misterius"></textarea>
+    <label>Suara Lingkungan</label>
+    <textarea placeholder="Contoh: Suara hujan deras dan petir menggema di kejauhan"></textarea>
+
+    <div class="split-columns">
       <div>
-        <h3>Prompt Bahasa Indonesia (dapat diedit)</h3>
-        <textarea id="hasilID"></textarea>
+        <h2>Prompt Video (Bahasa Indonesia - Dapat Diedit)</h2>
+        <div class="final-output">
+          <!-- Hasil naratif deskriptif muncul di sini -->
+        </div>
       </div>
       <div>
-        <h3>Final Prompt (English - tidak bisa diedit)</h3>
-        <textarea id="hasilEN" readonly></textarea>
+        <h2>Final Prompt (English - Tidak Dapat Diedit)</h2>
+        <div class="final-output">
+          <!-- English formatted prompt result -->
+        </div>
       </div>
     </div>
   </div>
-  <script>
-    const cameraOptions = [
-      { en: "Static Shot", id: "Bidikan Statis" },
-      { en: "Pan Left/Right", id: "Gerakan Pan Kiri/Kanan" },
-      { en: "Tilt Up/Down", id: "Gerakan Tilt Atas/Bawah" },
-      { en: "Zoom In/Out", id: "Zoom Masuk/Keluar" },
-      { en: "Dolly In/Out", id: "Dolly Masuk/Keluar" },
-      { en: "Tracking Shot", id: "Bidikan Mengikuti" },
-      { en: "Crane Shot", id: "Bidikan Crane" },
-      { en: "Handheld Camera", id: "Kamera Genggam" },
-      { en: "Steadicam", id: "Steadicam" },
-      { en: "POV Shot", id: "Sudut Pandang Karakter" },
-      { en: "Overhead Shot", id: "Bidikan Atas" },
-      { en: "3D Rotation", id: "Rotasi 3D" },
-      { en: "Orbit Shot", id: "Orbit Mengelilingi" },
-      { en: "First-person Walkthrough", id: "Pandangan Orang Pertama" },
-      { en: "Cinematic Zoom", id: "Zoom Sinematik" }
-    ];
-
-    const form = document.getElementById("promptForm");
-    const fields = [
-      "Judul Scene",
-      ...Array.from({length: 6}, (_, i) => `Deskripsi Karakter ${i+1}`),
-      ...Array.from({length: 6}, (_, i) => `Detail Suara Karakter ${i+1}`),
-      ...Array.from({length: 6}, (_, i) => `Aksi Karakter ${i+1}`),
-      ...Array.from({length: 6}, (_, i) => `Ekspresi Karakter ${i+1}`),
-      "Latar Tempat & Waktu",
-      "Gerakan Kamera",
-      "Pencahayaan",
-      "Gaya Video",
-      "Suasana Keseluruhan",
-      "Suara Lingkungan",
-      ...Array.from({length: 6}, (_, i) => `Dialog Karakter ${i+1}`),
-      "Detail Tambahan"
-    ];
-
-    fields.forEach(labelText => {
-      const label = document.createElement("label");
-      label.textContent = labelText;
-      form.appendChild(label);
-
-      if (labelText === "Gerakan Kamera") {
-        const select = document.createElement("select");
-        cameraOptions.forEach(opt => {
-          const option = document.createElement("option");
-          option.value = opt.en;
-          option.textContent = `${opt.en} (${opt.id})`;
-          select.appendChild(option);
-        });
-        form.appendChild(select);
-      } else {
-        const textarea = document.createElement("textarea");
-        textarea.placeholder = `Contoh narasi untuk ${labelText.toLowerCase()}...`;
-        form.appendChild(textarea);
-      }
-    });
-
-    function generatePrompt() {
-      const inputs = form.querySelectorAll("textarea, select");
-      let data = {};
-      fields.forEach((field, i) => {
-        data[field] = inputs[i]?.value || "";
-      });
-
-      const hasilID = `Judul: ${data["Judul Scene"]}\n\nDi latar ${data["Latar Tempat & Waktu"]}, enam karakter muncul dengan detail sebagai berikut:\n` +
-        Array.from({length: 6}, (_, i) => `Karakter ${i+1}: ${data[`Deskripsi Karakter ${i+1}`]} (Suara: ${data[`Detail Suara Karakter ${i+1}`]}), sedang ${data[`Aksi Karakter ${i+1}`]} dengan ekspresi ${data[`Ekspresi Karakter ${i+1}`]}.\nDialog: ${data[`Dialog Karakter ${i+1}`]}`).join("\n\n") +
-        `\n\nKamera: ${data["Gerakan Kamera"]}, pencahayaan: ${data["Pencahayaan"]}, gaya video: ${data["Gaya Video"]}.\nSuasana: ${data["Suasana Keseluruhan"]}.\nSuara lingkungan: ${data["Suara Lingkungan"]}.\n\nDetail tambahan: ${data["Detail Tambahan"]}`;
-
-      const hasilEN = hasilID.replace("Judul:", "Title:")
-        .replace(/Karakter (\d): (.*?) \(Suara: (.*?)\), sedang (.*?) dengan ekspresi (.*?)\.\nDialog: (.*?)(\n|$)/g,
-        (_, num, desc, voice, act, exp, dialog) => `Character ${num}: ${desc} (voice: ${voice}), performing ${act} with expression ${exp}. Says: \"${dialog}\"\n`
-      ).replace("Di latar", "In the setting of")
-        .replace("Kamera:", "Camera:")
-        .replace("pencahayaan:", "lighting:")
-        .replace("gaya video:", "video style:")
-        .replace("Suasana:", "Overall mood:")
-        .replace("Suara lingkungan:", "Environmental sound:")
-        .replace("Detail tambahan:", "Additional details:");
-
-      document.getElementById("hasilID").value = hasilID;
-      document.getElementById("hasilEN").value = hasilEN;
-    }
-  </script>
 </body>
 </html>
