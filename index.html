@@ -84,12 +84,8 @@
 <body>
   <div class="container">
     <h1>Aplikasi Prompter Konsisten Multikarakter</h1>
-    <form id="promptForm">
-      <!-- Input fields akan dimasukkan di sini oleh skrip atau komponen terpisah untuk efisiensi -->
-      <p>Form input lengkap akan dimasukkan di sini, termasuk 38 kolom sesuai urutan dan permintaan Anda, serta dropdown gerakan kamera dari Higgsfield.ai dan terjemahan Bahasa Indonesianya.</p>
-
-      <button type="button" onclick="generatePrompt()">Buat Prompt</button>
-    </form>
+    <form id="promptForm"></form>
+    <button type="button" onclick="generatePrompt()">Buat Prompt</button>
 
     <div class="output">
       <div>
@@ -104,14 +100,87 @@
   </div>
 
   <script>
+    const cameraOptions = [
+      { en: "Static Shot", id: "Bidikan Statis" },
+      { en: "Pan Left/Right", id: "Gerakan Pan Kiri/Kanan" },
+      { en: "Tilt Up/Down", id: "Gerakan Tilt Atas/Bawah" },
+      { en: "Zoom In/Out", id: "Zoom Masuk/Keluar" },
+      { en: "Dolly In/Out", id: "Dolly Masuk/Keluar" },
+      { en: "Tracking Shot", id: "Bidikan Mengikuti" },
+      { en: "Crane Shot", id: "Bidikan Crane" },
+      { en: "Handheld Camera", id: "Kamera Genggam" },
+      { en: "Steadicam", id: "Steadicam" },
+      { en: "POV Shot", id: "Sudut Pandang Karakter" },
+      { en: "Overhead Shot", id: "Bidikan Atas" },
+      { en: "3D Rotation", id: "Rotasi 3D" },
+      { en: "Orbit Shot", id: "Orbit Mengelilingi" },
+      { en: "First-person Walkthrough", id: "Pandangan Orang Pertama" },
+      { en: "Cinematic Zoom", id: "Zoom Sinematik" }
+    ];
+
+    const form = document.getElementById("promptForm");
+    const fields = [
+      "Judul Scene",
+      ...Array.from({length: 6}, (_, i) => `Deskripsi Karakter ${i+1}`),
+      ...Array.from({length: 6}, (_, i) => `Detail Suara Karakter ${i+1}`),
+      ...Array.from({length: 6}, (_, i) => `Aksi Karakter ${i+1}`),
+      ...Array.from({length: 6}, (_, i) => `Ekspresi Karakter ${i+1}`),
+      "Latar Tempat & Waktu",
+      "Gerakan Kamera",
+      "Pencahayaan",
+      "Gaya Video",
+      "Suasana Keseluruhan",
+      "Suara Lingkungan",
+      ...Array.from({length: 6}, (_, i) => `Dialog Karakter ${i+1}`),
+      "Detail Tambahan"
+    ];
+
+    fields.forEach(labelText => {
+      const label = document.createElement("label");
+      label.textContent = labelText;
+
+      if (labelText === "Gerakan Kamera") {
+        const select = document.createElement("select");
+        cameraOptions.forEach(opt => {
+          const option = document.createElement("option");
+          option.value = opt.en;
+          option.textContent = `${opt.en} (${opt.id})`;
+          select.appendChild(option);
+        });
+        form.appendChild(label);
+        form.appendChild(select);
+      } else {
+        const textarea = document.createElement("textarea");
+        textarea.placeholder = `Masukkan ${labelText.toLowerCase()}...`;
+        form.appendChild(label);
+        form.appendChild(textarea);
+      }
+    });
+
     function generatePrompt() {
-      // Placeholder logic sementara. Prompt generator naratif lengkap akan menyatukan 38 input ke dalam paragraf terstruktur
-      const hasilID = `Contoh naratif Bahasa Indonesia:\n\nJudul: Judul Scene\nDi latar tempat dan waktu tertentu, enam karakter dengan kepribadian berbeda hadir dengan aksi, ekspresi, dan suara masing-masing. Karakter 1 adalah ... (deskripsi lengkap termasuk suara, aksi, ekspresi, dialog). Kamera bergerak dengan gaya tertentu (misalnya 3D Rotation), pencahayaan soft lighting, gaya video cinematic storytelling. Suasana emosional terasa ... Suara latar ...\n\nDetail tambahan ...`;
+      const inputs = form.querySelectorAll("textarea, select");
+      let data = {};
+      fields.forEach((field, i) => {
+        data[field] = inputs[i]?.value || "";
+      });
 
-      const hasilEN = `Example Narrative Prompt (English Final):\n\nTitle: Scene Title\nIn a specific setting and time, six characters with unique personalities appear with their respective actions, expressions, and voices. Character 1 is ... (full description including voice, action, expression, dialogue). The camera moves using a motion style (e.g. 3D Rotation), lighting is soft, the video style is cinematic storytelling. The mood is ..., environmental sound is ...\n\nAdditional details ...`;
+      const hasilID = `Judul: ${data["Judul Scene"]}\n\nDi latar ${data["Latar Tempat & Waktu"]}, terdapat enam karakter:\n` +
+        Array.from({length: 6}, (_, i) => `Karakter ${i+1}: ${data[`Deskripsi Karakter ${i+1}`]} (${data[`Detail Suara Karakter ${i+1}`]}), sedang ${data[`Aksi Karakter ${i+1}`]} dengan ekspresi ${data[`Ekspresi Karakter ${i+1}`]}. Dialog: ${data[`Dialog Karakter ${i+1}`]}`).join("\n") +
+        `\n\nGerakan kamera: ${data["Gerakan Kamera"]}, pencahayaan: ${data["Pencahayaan"]}, gaya video: ${data["Gaya Video"]}.\nSuasana keseluruhan: ${data["Suasana Keseluruhan"]}.\nSuara lingkungan: ${data["Suara Lingkungan"]}.\n\nDetail tambahan: ${data["Detail Tambahan"]}`;
 
-      document.getElementById('hasilID').value = hasilID;
-      document.getElementById('hasilEN').value = hasilEN;
+      const hasilEN = hasilID.replace(/Karakter (\d): (.*?) \((.*?)\), sedang (.*?) dengan ekspresi (.*?)\. Dialog: (.*?)(\n|$)/g, 
+        (_, num, desc, voice, act, exp, dialog) => `Character ${num}: ${desc} (voice: ${voice}), performing ${act} with expression ${exp}. Says: ${dialog}\n`
+      ).replace("Judul: ", "Title: ")
+        .replace("Di latar", "In the setting of")
+        .replace("Gerakan kamera", "Camera movement")
+        .replace("pencahayaan", "lighting")
+        .replace("gaya video", "video style")
+        .replace("Suasana keseluruhan", "Overall mood")
+        .replace("Suara lingkungan", "Environmental sound")
+        .replace("Detail tambahan", "Additional details");
+
+      document.getElementById("hasilID").value = hasilID;
+      document.getElementById("hasilEN").value = hasilEN;
     }
   </script>
 </body>
